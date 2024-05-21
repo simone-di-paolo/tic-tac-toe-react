@@ -9,8 +9,7 @@ It's amazing, follow him!
 
 ## Screenshots
 
-Work in progress...
-<!--<img src="https://github.com/simone-di-paolo/react-essentials/assets/24905857/bf8a61f3-d349-4f4d-8b4d-0ad65c279f20" width="800px">-->
+<img src="https://github.com/simone-di-paolo/tic-tac-toe-react/assets/24905857/c6bfb1c3-a9ef-4cfe-a144-499ff4629aa5" width="800px">
 
 ## Technologies Used
 
