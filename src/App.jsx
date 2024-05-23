@@ -11,20 +11,23 @@ const initialGameBoard = [
   [null, null, null]
 ];
 
-function deriveActivePlayer(gameTurns) {
-  let currentPlayer = 'X';
+function deriveActivePlayer(gameTurns, gameCounter) {
+  let currentPlayer = gameCounter && gameCounter % 2 !== 0 ? 'O' : 'X';
 
   if (gameTurns.length > 0 && gameTurns[0].player === 'X') {
     currentPlayer = 'O';
+  } else if(gameTurns.length > 0 && gameTurns[0].player === 'O') {
+    currentPlayer = 'X';
   }
   return currentPlayer;
 }
 
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
+  const [gameCounter, setGameCounter] = useState(0);
 
-  const activePLayer = deriveActivePlayer(gameTurns);
-
+  const activePLayer = deriveActivePlayer(gameTurns, gameCounter);
+  
   let gameBoard = [...initialGameBoard.map(array => [...array])];
 
   for (const turn of gameTurns) {
@@ -51,7 +54,7 @@ function App() {
 
   function handleSelectSquare(rowIndex, colIndex) {
     setGameTurns(prevTurns => {
-      const currentPlayer = deriveActivePlayer(prevTurns);
+      const currentPlayer = deriveActivePlayer(prevTurns, gameCounter);
       const updatedTurns = [{ square: { row: rowIndex, col: colIndex }, player: currentPlayer },
       ...prevTurns];
       return updatedTurns;
@@ -59,7 +62,12 @@ function App() {
   }
 
   function handleRestart() {
+    handleSetCounter();
     setGameTurns([]);
+  }
+
+  function handleSetCounter() {
+    setGameCounter(prevCounter => prevCounter + 1);
   }
 
   return <main>
@@ -79,7 +87,8 @@ function App() {
       {(winner || hasDraw) && <GameOver winner={winner} onRestart={handleRestart}/>}
       <GameBoard
         onSelectSquare={handleSelectSquare}
-        board={gameBoard} />
+        board={gameBoard} 
+        />
     </div>
     <Log turns={gameTurns} />
   </main>
